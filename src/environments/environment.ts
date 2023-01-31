@@ -3,7 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  authUrl : 'http://localhost:8080/cas/oidc/accessToken',
+  clientId : 'client',
+  client_secret : 'secret',
+  grant_type : 'password',
+  redirectUri : 'http://localhost:4200',
+  scope :'',
+  refreshInterval :''
 };
 
 /*
