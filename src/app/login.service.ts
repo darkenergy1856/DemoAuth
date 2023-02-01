@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc/oauth-service';
-import { AuthConfig } from 'angular-oauth2-oidc';
+import { AuthConfig, OAuthService, UserInfo } from 'angular-oauth2-oidc';
 
 const authCodeFlowConfig: AuthConfig = {
 
-  issuer: 'http://localhost:8080/cas/',
+  requireHttps: false,
+
+  issuer: 'http://localhost:8080/cas/oidc',
 
   // strict discovery document disallows urls which not start with issuers url
   strictDiscoveryDocumentValidation: false,
@@ -26,9 +27,13 @@ const authCodeFlowConfig: AuthConfig = {
   providedIn: 'root',
 })
 export class LoginService {
-  constructor(private readonly oAuthService : OAuthService) {
+  constructor(oAuthService : OAuthService) {
+    console.log("I was Here");
+
     oAuthService.configure(oAuthService)
     oAuthService.loadDiscoveryDocument().then(() => {
+      console.log("Help Me ! I am Done");
+
       oAuthService.tryLoginImplicitFlow().then(()=>{
         if(!oAuthService.hasValidAccessToken()){
           oAuthService.initLoginFlow()
@@ -39,7 +44,6 @@ export class LoginService {
         }
       })
     })
-
   }
 
 }
